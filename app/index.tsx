@@ -1,15 +1,4 @@
-import { Text, View } from "react-native";
-
-export default function Index() {
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>hola mundo</Text>
-    </View>
-  );
+import LoginScreen from "@/src/layouts/LoginScreen";
+export default function Index(){
+  return <LoginScreen/>
 }
