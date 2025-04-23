@@ -1,49 +1,49 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
-import {supabase} from "../supabaseClient";
+import { supabase } from "../supabaseClient";
 
 export default function RegisterScreen({ onClose }: any) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [fullname, setFullName] = useState("");
-    const [mobile, setMobilephone] = useState("");
-    const [loading, setLoading] = useState("");
-    const [errorMessage, setErrorMessage] = useState("")
-
-    const handleRegister = async() => {
-        setLoading( true );
+    const [mobilephone, setMobilePhone] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+    
+    const handleRegister = async () => {
+        setLoading(true);
         setErrorMessage("");
-        const (data, error) = await supabase.auth.signUp({
-            email,
+
+        const { data, error } = await supabase.auth.signUp({
+            email, 
             password
-
         });
-        if (error){
 
+        if(error) {
+            setErrorMessage(error.message);
+            setLoading(false);
+            return;
         }
 
-//insertar data into supabase table
-const {error: InsertError} = await supabase.from("users").insert([
-    {
-      email: email,
-      password: password,
-      fullname: fullname,
-      mobile_phone: mobilephone
+        //Insert data into Supabase table
+        const { error: InsertError } = await supabase.from("users").insert([
+            { 
+                email: email, 
+                password: password,
+                fullname: fullname,
+                mobile_phone: mobilephone
+            }
+        ]);
 
+        setLoading(false);
+        if (InsertError) {
+            setErrorMessage(InsertError.message);
+        } else {
+            alert("User has been created successfully");
+            onClose();
+        }
     }
 
-]);
-setLoading(false);
-if (InsertError){
-    setErrorMessage(InsertError.message);
-} else{
-    alert ("")
-}
-
-    }
-
-    
-    
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Sign up</Text>
@@ -64,7 +64,7 @@ if (InsertError){
                 placeholder="(+57) 000000000"
             />
             <TouchableOpacity style={styles.button}>
-                <Text style={styles.buttonText}>Registrar</Text>
+                <Text style={styles.buttonText}>Register</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={onClose}>
                 <Text style={styles.link}>Back to login</Text>
