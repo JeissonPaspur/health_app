@@ -1,26 +1,38 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { View, Image, StyleSheet } from "react-native";
-import LoginScreen from "./LoginScreen";
+import { useRouter } from "expo-router";
 
 export default function SplashScreen() {
-  const [showLogin, setShowLogin] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setShowLogin(true);
-    }, 3000); // 3 segundos
+      router.replace("/login");
+    }, 3000);
     
     return () => clearTimeout(timer);
   }, []);
 
-  if (showLogin) {
-    return <LoginScreen />;
-  }
-
   return (
-    <View>
-      <Image source={require("./assets/logo.jpg")}/>
-        
+    <View style={styles.container}>
+      <Image 
+        source={require("@/assets/images/Logo_unicesmag.png")} 
+        style={styles.image} 
+      />
     </View>
   );
 }
+
+// Mover los estilos FUERA del componente
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white"
+  },
+  image: {
+    width: 200,
+    height: 200
+  }
+});
