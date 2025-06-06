@@ -28,7 +28,7 @@ export default function HomeScreen() {
         contentContainerStyle={styles.content}
         entering={FadeIn.duration(500)}
       >
-        {/* ===== HERO CON IMAGEN DE FONDO ===== */}
+        {/* Imagen de fondo con mensaje principal */}
         <Animated.View entering={FadeInUp.duration(800)}>
           <ImageBackground
             source={require("C:/Users/ASUS/Documents/health_app/assets/images/banner.png")}
@@ -48,7 +48,7 @@ export default function HomeScreen() {
           </ImageBackground>
         </Animated.View>
 
-        {/* ===== BLOQUE BLANCO (SE MANTIENE) ===== */}
+        {/* Bloque de bienvenida */}
         <Animated.View style={styles.heroLight} entering={FadeInUp.delay(300).duration(800)}>
           <Text style={styles.heroTitleLight}>
             <Text style={styles.accent}>Bienestar </Text>Pleno
@@ -62,7 +62,7 @@ export default function HomeScreen() {
           </Text>
         </Animated.View>
 
-        {/* ===== CTA TEST ESTRÉS ===== */}
+        {/* Sección del test de estrés */}
         <Animated.View style={styles.stressSection} entering={FadeInUp.delay(600).duration(800)}>
           <Text style={styles.sectionTitle}>Test de Estrés</Text>
           <Text style={styles.paragraph}>Mide tu nivel actual y obtén recomendaciones.</Text>
@@ -71,39 +71,36 @@ export default function HomeScreen() {
           </TouchableOpacity>
         </Animated.View>
 
-        {/* ===== FOOTER ===== */}
+        {/* Footer */}
         <View style={styles.footer}>
           <Text style={styles.footerText}>© 2024 Bienestar Pleno</Text>
         </View>
       </Animated.ScrollView>
 
-      {/* ===== MENÚ INFERIOR ===== */}
-      <View style={styles.bottomMenu}>
-        <IconButton icon="play-circle-outline" label="Consultas" onPress={() => router.push("/consultas")} />
-        <IconButton icon="chatbubble-ellipses-outline" label="Testimonios" onPress={() => router.push("/testimonios")} />
-        <IconButton icon="people-outline" label="Nosotros" onPress={() => router.push("/nosotros")} />
-        <IconButton icon="log-out-outline" label="Salir" onPress={handleLogout} color="#84b74d" />
+      {/* Barra de navegación inferior tipo UiLover */}
+      <View style={styles.bottomMenuNew}>
+        <TouchableOpacity style={styles.menuItem} onPress={() => router.push("/consultas")}>
+          <Ionicons name="medkit-outline" size={24} color="#4c5c94" />
+          <Text style={styles.menuLabel}>Consultas</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.menuItem} onPress={() => router.push("/testimonios")}>
+          <Ionicons name="chatbubble-ellipses-outline" size={24} color="#4c5c94" />
+          <Text style={styles.menuLabel}>Testimonios</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.menuItem} onPress={() => router.push("/nosotros")}>
+          <Ionicons name="people-outline" size={24} color="#4c5c94" />
+          <Text style={styles.menuLabel}>Nosotros</Text>
+        </TouchableOpacity>
+         <TouchableOpacity style={styles.menuItem} onPress={() => router.push("/servicios")}>
+          <Ionicons name="pulse-outline" size={24} color="#4c5c94" />
+          <Text style={styles.menuLabel}>Servicios</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.menuItem} onPress={handleLogout}>
+          <Ionicons name="log-out-outline" size={24} color="#e74c3c" />
+          <Text style={[styles.menuLabel, { color: "#e74c3c" }]}>Salir</Text>
+        </TouchableOpacity>
       </View>
     </View>
-  );
-}
-
-function IconButton({
-  icon,
-  label,
-  onPress,
-  color = "#4c5c94",
-}: {
-  icon: React.ComponentProps<typeof Ionicons>["name"];
-  label: string;
-  onPress: () => void;
-  color?: string;
-}) {
-  return (
-    <TouchableOpacity style={styles.iconButton} onPress={onPress}>
-      <Ionicons name={icon} size={26} color={color} />
-      <Text style={styles.iconLabel}>{label}</Text>
-    </TouchableOpacity>
   );
 }
 
@@ -201,27 +198,33 @@ const styles = StyleSheet.create({
     color: "#aaa",
   },
 
-  bottomMenu: {
+  bottomMenuNew: {
     position: "absolute",
     bottom: 0,
     left: 0,
     right: 0,
-    height: 80,
     backgroundColor: "#ffffff",
-    borderTopWidth: 1,
-    borderTopColor: "#eee",
+    paddingVertical: 14,
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
     flexDirection: "row",
     justifyContent: "space-around",
-    alignItems: "center",
-    paddingBottom: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: -3 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 8,
   },
-  iconButton: {
+
+  menuItem: {
     alignItems: "center",
     justifyContent: "center",
   },
-  iconLabel: {
+
+  menuLabel: {
     fontSize: 12,
+    marginTop: 6,
     color: "#4c5c94",
-    marginTop: 4,
+    fontWeight: "500",
   },
 });
